@@ -9,7 +9,7 @@ class ClienteCreate(BaseModel):
     telefono: str
     direccion: str
 
-class ClienteResponde(BaseModel):
+class ClienteResponse(BaseModel):
     id_cliente: int
     nombre: str
     apellido: str
