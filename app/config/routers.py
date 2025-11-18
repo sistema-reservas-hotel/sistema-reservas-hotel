@@ -1,5 +1,5 @@
-from api import cliente_api
+from api import Registro_api
 
 ROUTERS = [
-    cliente_api.router,
+    Registro_api.router, 
 ]
