@@ -7,4 +7,8 @@ class InicioRepository:
         self.db = db
 
     def get_user_by_email(self, email: str) -> ClienteDB:
-        return self.db.query(ClienteDB).filter(ClienteDB.email == email).first()
+        return (
+            self.db.query(ClienteDB)
+            .filter(ClienteDB.email == email)
+            .first()
+        )

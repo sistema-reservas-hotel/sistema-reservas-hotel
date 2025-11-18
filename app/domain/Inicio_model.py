@@ -4,12 +4,11 @@ class InicioRequest(BaseModel):
     email: EmailStr
     password: str
 
-class InicioClienteData(BaseModel):
+class ClienteToken(BaseModel):
     id_cliente: int
     nombre: str
     email: EmailStr
 
 class InicioResponse(BaseModel):
-    mensaje: str
-    data: dict | None
-    success: bool
+    token: str
+    cliente: ClienteToken
