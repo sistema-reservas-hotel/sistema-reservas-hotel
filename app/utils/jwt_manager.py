@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from jose import jwt
+from jose import jwt, JWTError
 
 # Clave secreta para firmar el token (colócala en .env más adelante)
 SECRET_KEY = "CLAVE_SECRETA_SUPER_SEGURA"
@@ -19,3 +20,9 @@ def create_access_token(data: dict):
 
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
+def decode_token(token: str):
+    try:
+        return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    except JWTError:
+        return None
