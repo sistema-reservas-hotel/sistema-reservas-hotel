@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from repository.cliente_repository import ClienteRepository
-from domain.cliente_model import ClienteCreate,ClienteResponse
+from repository.Registro_repository import ClienteRepository
+from domain.Registro_model import ClienteCreate,ClienteResponse
 from utils.password import hash_password, verify_password
 
 
