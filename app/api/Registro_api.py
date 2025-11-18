@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from database import SessionLocal
-from services.cliente_service import ClienteService
-from domain.cliente_model import ClienteCreate
+from services.Registro_service import ClienteService
+from domain.Registro_model import ClienteCreate
 
 router = APIRouter(
     prefix= "/api/v1/cliente",
