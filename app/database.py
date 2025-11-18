@@ -1,8 +1,9 @@
-from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import relationship
 from datetime import datetime
-from sqlalchemy import DateTime
+
 
 DATABASE_URL = "sqlite:///./ReservasHotel.db"
 
@@ -24,6 +25,21 @@ class ClienteDB(Base):
     direccion = Column(String)
     fecha_registro = Column(DateTime, default=datetime.utcnow)
     password = Column(String, nullable=False)
+
+class ReservasDB(Base):
+    __tablename__ = "reservas"
+    id_reserva = Column(Integer, primary_key=True)
+    id_cliente = Column(Integer, ForeignKey("clientes.id_cliente"), nullabel=False)
+    fecha_reserva = Column(DateTime, nullable=False)
+    check_in = Column(Date, nullable=False)
+    check_out = Column(Date, nullable=False)
+    habitacion = Column(String, nullable=False)
+    plan = Column(String, nullable=False)
+    valor_total = Column(Integer, nullable=False)
+    estado = Column(String, nullable=False)
+
+    cliente = relationship("ClienteDB", backref="reservas")
+
 
 
 Base.metadata.create_all(bind=engine)
