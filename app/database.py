@@ -40,6 +40,19 @@ class ReservasDB(Base):
 
     cliente = relationship("ClienteDB", backref="reservas")
 
+class PagosDB(Base):
+    __tablename__ = "pagos"
+    id_pago = Column(Integer, primary_key=True)
+    id_cliente = Column(Integer, ForeignKey("clientes.id_cliente"), nullable=False)
+    id_reserva = Column(Integer, ForeignKey("reservas.id_reserva"), nullable=True)
+    fecha_pago = Column(DateTime, default=datetime.utcnow, nullable=False)
+    monto = Column(Integer, nullable=False)
+    metodo = Column(String, nullable=False)
+    estado = Column(String, nullable=False)  # Ej: Completado, Pendiente
+    comprobante = Column(String, nullable=True)  # URL del comprobante PDF
+
+    cliente = relationship("ClienteDB", backref="pagos")
+    reserva = relationship("ReservasDB", backref="pagos")
 
 
 Base.metadata.create_all(bind=engine)
