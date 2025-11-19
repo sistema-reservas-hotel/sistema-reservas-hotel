@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey, DateTime
+from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey, DateTime, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import relationship
@@ -37,8 +37,28 @@ class ReservasDB(Base):
     plan = Column(String, nullable=False)
     valor_total = Column(Integer, nullable=False)
     estado = Column(String, nullable=False)
-
     cliente = relationship("ClienteDB", backref="reservas")
+
+class HabitacionesDB(Base): 
+    __tablename__ = "habitaciones"
+    id_tipoHabitacion = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String, nullable=False)
+    descripcion = Column(String, nullable=False)
+    capacidad = Column(Integer, nullable=False)
+    precioPorNoche = Column(Integer, nullable=False)
+    imagen = Column(String, nullable=True)
+    disponible = Column(Boolean, default=True)
+    habitacionesDisponibles = Column(Integer, default=0)
+    planes = relationship("PlanesDB", back_populates="habitacion")
+
+class PlanesDB(Base):
+    __tablename__ = "planes"
+    id_Plan = Column(Integer, primary_key=True, index=True)
+    id_tipoHabitacion = Column(Integer, ForeignKey("habitaciones.idTipoHabitacion"), nullable=False)
+    nombre = Column(String, nullable=False)  
+    precio = Column(Integer, nullable=False)
+    serviciosIncluidos = Column(String, nullable=False)  
+    habitacion = relationship("HabitacionesDB", back_populates="planes")
 
 
 
