@@ -40,6 +40,7 @@ class ReservasDB(Base):
     cliente = relationship("ClienteDB", backref="reservas")
 
 
+
 class HabitacionesDB(Base): 
     __tablename__ = "habitaciones"
     id_tipoHabitacion = Column(Integer, primary_key=True, index=True)
