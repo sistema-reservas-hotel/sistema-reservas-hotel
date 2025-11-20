@@ -77,4 +77,17 @@ class PagosDB(Base):
     reserva = relationship("ReservasDB", backref="pagos")
 
 
+class PreferenciasClienteDB(Base):
+    __tablename__ = "preferencias_cliente"
+    id_preferencia = Column(Integer, primary_key=True, index=True)
+    id_cliente = Column(Integer, ForeignKey("clientes.id_cliente"), unique=True, nullable=False)
+    documento = Column(String, nullable=True)
+    tipo_habitacion_preferida = Column(String, nullable=True)
+    metodo_pago_preferido = Column(String, nullable=True)
+    hora_llegada = Column(String, nullable=True)
+    cliente = relationship("ClienteDB", back_populates="preferencias")
+
+
+
+
 Base.metadata.create_all(bind=engine)
