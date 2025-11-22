@@ -29,7 +29,7 @@ class ClienteDB(Base):
 class ReservasDB(Base):
     __tablename__ = "reservas"
     id_reserva = Column(Integer, primary_key=True)
-    id_cliente = Column(Integer, ForeignKey("clientes.id_cliente"), nullabel=False)
+    id_cliente = Column(Integer, ForeignKey("clientes.id_cliente"), nullable=False)
     fecha_reserva = Column(DateTime, nullable=False)
     check_in = Column(Date, nullable=False)
     check_out = Column(Date, nullable=False)
