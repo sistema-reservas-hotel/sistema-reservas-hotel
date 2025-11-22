@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from config.routers import ROUTERS
+from app.config.routers import ROUTERS
 
 app = FastAPI(
     title="Sistema de Reservas de Hotel",
