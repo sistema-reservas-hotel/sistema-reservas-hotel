@@ -1,4 +1,4 @@
-from sqlalchemy import Session 
+from sqlalchemy.orm import Session 
 from app.domain.Habitacion_model import HabitacionesResponse, HabitacionBase, PlanIncluido, ErrorResponse
 from app.repository.Habitacion_repository import HabitacionesRepository
 

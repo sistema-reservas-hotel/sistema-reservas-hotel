@@ -1,4 +1,4 @@
-from sqlalchemy import Session
+from sqlalchemy.orm import Session
 from app.database import ClienteDB
 from app.domain.Registro_model import ClienteCreate
 from datetime import datetime
