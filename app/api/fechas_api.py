@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, Query, HTTPException, status
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
-from services.fechas_service import FechasService
+from app.services.fechas_service import FechasService
+
 
 router = APIRouter(prefix="/api/v1/reservas/fechas", tags=["Fechas"])
 

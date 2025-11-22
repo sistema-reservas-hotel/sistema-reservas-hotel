@@ -1,9 +1,10 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from repository.Inicio_repository import InicioRepository
-from utils.password import verify_password
-from utils.jwt_manager import create_access_token
-from domain.Inicio_model import InicioRequest, InicioResponse, ClienteToken
+from app.repository.Inicio_repository import InicioRepository
+from app.utils.password import verify_password
+from app.utils.jwt_manager import create_access_token
+from app.domain.Inicio_model import InicioRequest, InicioResponse, ClienteToken
+
 
 class InicioService:
     def __init__(self, db: Session):

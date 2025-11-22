@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, Header, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
-from services.Reserva_service import ReservaService
-from utils.jwt_manager import decode_token  
+from app.services.Reserva_service import ReservaService
+from app.utils.jwt_manager import decode_token 
 
 router = APIRouter(prefix="/api/cliente", tags=["Reservas"])
 

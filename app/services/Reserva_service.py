@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from typing import Optional
-from repository.Reserva_repository import ReservaRepository
-from domain.Reserva_model import ReservaItem, ReservasData, ReservasResponse
+from app.repository.Reserva_repository import ReservaRepository
+from app.domain.Reserva_model import ReservaItem, ReservasData, ReservasResponse
 from datetime import datetime, date
 
 class ReservaService:

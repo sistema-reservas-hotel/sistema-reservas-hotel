@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from repository.pago_repository import PagoRepository
-from domain.pago_model import ResponsePagos, PagoDetalle
+from app.repository.pago_repository import PagoRepository
+from app.domain.pago_model import ResponsePagos, PagoDetalle
 from fastapi import HTTPException
 from typing import Optional
 from datetime import datetime

@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
-from services.Habitaciones_service import HabitacionesService
-from domain.Habitacion_model import HabitacionesResponse, HabitacionResponse, ErrorResponse
+from app.services.Habitaciones_service import HabitacionesService
+from app.domain.Habitacion_model import HabitacionesResponse, HabitacionResponse, ErrorResponse
+
 
 
 router = APIRouter(prefix="/reservas/habitaciones", tags=["Habitaciones"])

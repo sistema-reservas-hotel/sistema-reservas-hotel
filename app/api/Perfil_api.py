@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, Header, status
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
-from services.Perfil_service import PerfilService
-from domain.perfil_model import PerfilUpdateRequest
+from app.services.Perfil_service import PerfilService
+from app.domain.perfil_model import PerfilUpdateRequest
 
 router = APIRouter(
     prefix="/api/v1/cliente",

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
-from services.preferencias_service import PreferenciasService
-from domain.preferencias_model import PreferenciasBase, PreferenciasResponse
+from app.services.preferencias_service import PreferenciasService
+from app.domain.preferencias_model import PreferenciasBase, PreferenciasResponse
 
 router = APIRouter(prefix="/api/clientes/preferencias", tags=["Preferencias Cliente"])
 

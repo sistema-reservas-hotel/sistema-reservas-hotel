@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from repository.plan_repository import PlanRepository
-from domain.plan_model import ResponsePlanList, ResponsePlanDetalle, PlanResponse
+from app.repository.plan_repository import PlanRepository
+from app.domain.plan_model import ResponsePlanList, ResponsePlanDetalle, PlanResponse
 
 
 class PlanService:

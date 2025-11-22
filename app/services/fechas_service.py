@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from repository.fechas_repository import FechasRepository
-from domain.fechas_model import FechaItem, DisponibilidadData, DisponibilidadResponse
+from app.repository.fechas_repository import FechasRepository
+from app.domain .fechas_model import FechaItem, DisponibilidadData, DisponibilidadResponse
 from datetime import datetime, timedelta, date
 from typing import Optional, List
 

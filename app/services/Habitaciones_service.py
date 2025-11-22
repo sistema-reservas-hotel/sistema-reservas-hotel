@@ -1,6 +1,6 @@
 from sqlalchemy import Session 
-from repository.Habitacion_repository import HabitacionesRepository
-from domain.Habitacion_model import HabitacionResponse, HabitacionesResponse, PlanIncluido, ErrorResponse
+from app.domain.Habitacion_model import HabitacionesResponse, HabitacionBase, PlanIncluido, ErrorResponse
+from app.repository.Habitacion_repository import HabitacionesRepository
 
 class HabitacionesService:
     def __init__(self, db: Session):

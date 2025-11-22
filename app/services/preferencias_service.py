@@ -1,8 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-
-from repository.preferencias_repository import PreferenciasRepository
-from domain.preferencias_model import PreferenciasBase, PreferenciasResponse
+from app.repository.preferencias_repository import PreferenciasRepository
+from app.domain.preferencias_model import PreferenciasBase, PreferenciasResponse
 
 class PreferenciasService:
 

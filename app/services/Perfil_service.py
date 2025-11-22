@@ -1,8 +1,8 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
-from repository.Perfil_repository import PerfilRepository
-from domain.perfil_model import PerfilResponse, PerfilUpdateRequest
-from utils.jwt_manager import decode_token
+from app.repository.Perfil_repository import PerfilRepository
+from app.domain.perfil_model import PerfilResponse, PerfilUpdateRequest
+from app.utils.jwt_manager import decode_token
 
 class PerfilService:
 

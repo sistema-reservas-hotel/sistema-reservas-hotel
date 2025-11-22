@@ -1,6 +1,6 @@
 from sqlalchemy import Session
 from app.database import ClienteDB
-from domain.Registro_model import ClienteCreate
+from app.domain.Registro_model import ClienteCreate
 from datetime import datetime
 
 class ClienteRepository:
