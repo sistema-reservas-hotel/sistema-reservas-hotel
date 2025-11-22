@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session 
-from app.domain.Habitacion_model import HabitacionesResponse, HabitacionBase, PlanIncluido, ErrorResponse
+from app.domain.Habitacion_model import HabitacionesResponse, HabitacionResponse, PlanIncluido, ErrorResponse
 from app.repository.Habitacion_repository import HabitacionesRepository
 
 class HabitacionesService:
