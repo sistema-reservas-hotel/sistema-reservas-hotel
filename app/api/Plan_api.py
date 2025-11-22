@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from database import SessionLocal
-from services.plan_service import PlanService
-from domain.plan_model import ResponsePlanList, ResponsePlanDetalle
+from services.Plan_service import PlanService
+from domain.Plan_model import ResponsePlanList, ResponsePlanDetalle
 
 router = APIRouter(prefix="/reservas", tags=["Planes"])
 
