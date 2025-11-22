@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Header, HTTPException, status, Query
 from sqlalchemy.orm import Session
-from database import SessionLocal
+from app.database import SessionLocal
 from services.Reserva_service import ReservaService
 from utils.jwt_manager import decode_token  
 

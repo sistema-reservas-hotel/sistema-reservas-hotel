@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
-from database import PreferenciasClienteDB
+from app.database import PreferenciasClienteDB
+
 
 class PreferenciasRepository:
 

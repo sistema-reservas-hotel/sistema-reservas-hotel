@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-
-from database import SessionLocal
+from app.database import SessionLocal
 from services.preferencias_service import PreferenciasService
 from domain.preferencias_model import PreferenciasBase, PreferenciasResponse
 

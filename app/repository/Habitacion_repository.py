@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
-from database import HabitacionesDB, PlanesDB
+from app.database import HabitacionesDB, PlanesDB
+
 
 class HabitacionesRepository:
     def __init__(self, db: Session):

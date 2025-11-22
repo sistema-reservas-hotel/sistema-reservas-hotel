@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from database import SessionLocal
+from app.database import SessionLocal
 from services.Plan_service import PlanService
 from domain.Plan_model import ResponsePlanList, ResponsePlanDetalle
 

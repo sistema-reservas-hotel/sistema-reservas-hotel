@@ -1,5 +1,5 @@
 from sqlalchemy import Session
-from database import ClienteDB
+from app.database import ClienteDB
 from domain.Registro_model import ClienteCreate
 from datetime import datetime
 

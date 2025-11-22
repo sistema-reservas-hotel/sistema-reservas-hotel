@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from typing import List, Optional
-from database import ReservasDB
+from app.database import ReservasDB
 from datetime import datetime, date
 
 class ReservaRepository:

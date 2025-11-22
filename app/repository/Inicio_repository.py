@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
-from database import ClienteDB
+from app.database import ClienteDB
+
 
 class InicioRepository:
 

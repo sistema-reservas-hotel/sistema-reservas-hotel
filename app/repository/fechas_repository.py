@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from typing import List
 from datetime import date, datetime, timedelta
-from database import ReservasDB, HabitacionesDB
+from app.database import ReservasDB, HabitacionesDB
 
 class FechasRepository:
     """

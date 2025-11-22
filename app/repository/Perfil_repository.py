@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from database import ClienteDB
+from app.database import ClienteDB
 from datetime import datetime
 
 class PerfilRepository:

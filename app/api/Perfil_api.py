@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Header, status
 from sqlalchemy.orm import Session
-from database import SessionLocal
+from app.database import SessionLocal
 from services.Perfil_service import PerfilService
 from domain.perfil_model import PerfilUpdateRequest
 

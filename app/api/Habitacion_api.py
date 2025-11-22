@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
-from database import SessionLocal
+from app.database import SessionLocal
 from services.Habitaciones_service import HabitacionesService
 from domain.Habitacion_model import HabitacionesResponse, HabitacionResponse, ErrorResponse
 

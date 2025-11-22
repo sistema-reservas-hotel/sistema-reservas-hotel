@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from database import PagosDB
+from app.database import PagosDB
 from typing import List, Optional
 from datetime import datetime
 

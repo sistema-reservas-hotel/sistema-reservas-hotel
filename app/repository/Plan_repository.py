@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from database import PlanDB
+from app.database import PlanesDB
 from typing import List, Optional
 
 
@@ -7,8 +7,8 @@ class PlanRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def obtener_planes_activos(self) -> List[PlanDB]:
-        return self.db.query(PlanDB).filter(PlanDB.activo == True).all()
+    def obtener_planes_activos(self) -> List[PlanesDB]:
+        return self.db.query(PlanesDB).filter(PlanesDB.activo == True).all()
 
-    def obtener_plan_por_id(self, idPlan: int) -> Optional[PlanDB]:
-        return self.db.query(PlanDB).filter(PlanDB.idPlan == idPlan, PlanDB.activo == True).first()
+    def obtener_plan_por_id(self, idPlan: int) -> Optional[PlanesDB]:
+        return self.db.query(PlanesDB).filter(PlanesDB.idPlan == idPlan, PlanesDB.activo == True).first()

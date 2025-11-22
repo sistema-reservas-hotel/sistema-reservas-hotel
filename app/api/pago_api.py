@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from database import SessionLocal
+from app.database import SessionLocal
 from services.pago_service import PagoService
 from domain.pago_model import ResponsePagos
 from typing import Optional
