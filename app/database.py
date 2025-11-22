@@ -56,7 +56,7 @@ class HabitacionesDB(Base):
 class PlanesDB(Base):
     __tablename__ = "planes"
     id_Plan = Column(Integer, primary_key=True, index=True)
-    id_tipoHabitacion = Column(Integer, ForeignKey("habitaciones.idTipoHabitacion"), nullable=False)
+    id_tipoHabitacion = Column(Integer, ForeignKey("habitaciones.id_tipoHabitacion"),nullable=False)
     nombre = Column(String, nullable=False)  
     precio = Column(Integer, nullable=False)
     serviciosIncluidos = Column(String, nullable=False)  
