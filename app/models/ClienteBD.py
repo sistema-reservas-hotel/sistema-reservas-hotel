@@ -6,7 +6,7 @@ from datetime import datetime
 Base = declarative_base()
 
 class ClienteDB(Base):
-    _tablename_ = "clientes"
+    __tablename__ = "clientes"
     id_cliente = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, nullable=False)
     apellido = Column(String, nullable=False)
