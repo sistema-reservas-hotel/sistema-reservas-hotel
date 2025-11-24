@@ -7,7 +7,7 @@ from app.domain.Inicio_model import InicioRequest, InicioResponse, ClienteToken
 
 
 class InicioService:
-    def _init_(self, db: Session):
+    def __init__(self, db: Session):
         self.repository = InicioRepository(db)
 
     def inicio(self, credentials: InicioRequest):
