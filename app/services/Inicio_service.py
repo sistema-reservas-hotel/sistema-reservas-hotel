@@ -19,7 +19,7 @@ class InicioService:
                 "success":False
             }
         
-        cliente = self.repository.get_by_email(credentials.email)
+        cliente = self.repository.get_user_by_email(credentials.email)
 
         if not cliente: 
             return {

@@ -21,4 +21,4 @@ def get_db():
 @router.post("/login", status_code=status.HTTP_200_OK)
 def login(credentials: InicioRequest, db: Session = Depends(get_db)):
     service = InicioService(db)
-    return service.login(credentials)
+    return service.inicio(credentials)

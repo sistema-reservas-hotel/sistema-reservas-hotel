@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from datetime import date
+from datetime import datetime
 
 class ClienteCreate(BaseModel):
     nombre: str
@@ -16,7 +16,7 @@ class ClienteResponse(BaseModel):
     email: str
     telefono: str
     direccion: str
-    fecha_registro: date
+    fecha_registro: datetime
 
     class Config:
         from_attributes = True

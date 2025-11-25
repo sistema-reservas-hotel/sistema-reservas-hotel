@@ -5,10 +5,10 @@ from datetime import datetime
 
 class ClienteRepository:
 
-    def _init_(self, db: Session):
+    def __init__(self, db: Session):
         self.db = db
 
-    def get_by_email(self, email: str) -> ClienteDB:
+    def get_user_by_email(self, email: str) -> ClienteDB:
         return self.db.query(ClienteDB).filter(ClienteDB.email == email).first()
     
     def create_cliente(self, cliente: ClienteCreate, hashed_password: str) -> ClienteDB:
