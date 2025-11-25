@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from app.repository.preferencias_repository import PreferenciasRepository
+from app.repository.Preferencias_repository import PreferenciasRepository
 from app.utils.jwt_manager import validate_token
-from app.domain.preferencias_model import PreferenciasBase, PreferenciasResponse
+from app.domain.Preferencias_model import PreferenciasBase, PreferenciasResponse
 
 class PreferenciasService:
 

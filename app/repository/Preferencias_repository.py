@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.models.preferencias import PreferenciasCliente
+from app.models.PreferenciasBD import PreferenciasCliente
 
 class PreferenciasRepository:
 
