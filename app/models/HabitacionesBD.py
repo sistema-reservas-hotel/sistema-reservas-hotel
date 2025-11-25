@@ -7,7 +7,7 @@ from sqlalchemy.orm import relationship
 Base = declarative_base()
 
 class HabitacionesDB(Base): 
-    tablename = "habitaciones"
+    __tablename__ = "habitaciones"
     id_tipoHabitacion = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, nullable=False)
     descripcion = Column(String, nullable=False)
