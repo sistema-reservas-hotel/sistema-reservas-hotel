@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey,
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
+from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
@@ -16,4 +17,5 @@ class ReservasDB(Base):
     plan = Column(String, nullable=False)
     valor_total = Column(Integer, nullable=False)
     estado = Column(String, nullable=False)
+    cliente = relationship("ClienteDB", backref="reservas")
     
