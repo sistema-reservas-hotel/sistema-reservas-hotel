@@ -14,7 +14,7 @@ class ReservaRepository:
         id_cliente: int,
         estado: Optional[str] = None,
         fecha_inicio: Optional[date] = None,
-        fecha_fin: Optional[date] = None) -> List[ReservasBD]:
+        fecha_fin: Optional[date] = None) -> List[ReservasDB]:
        
         query = self.db.query(ReservasDB).filter(ReservasDB.id_cliente == id_cliente)
 
