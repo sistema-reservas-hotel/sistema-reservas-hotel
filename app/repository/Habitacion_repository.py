@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.models import HabitacionesDB, PlanesDB
+from app.models import HabitacionesBD, PlanesBD
 
 
 class HabitacionesRepository:
@@ -7,10 +7,10 @@ class HabitacionesRepository:
         self.db = db
 
     def get_all_habitaciones(self):
-        return self.db.query(HabitacionesDB).all()
+        return self.db.query(HabitacionesBD).all()
     
     def get_habitacion_by_tipo(self, tipo: str):
-        return self.db.query(HabitacionesDB).filter(HabitacionesDB.nombre == tipo).first()
+        return self.db.query(HabitacionesBD).filter(HabitacionesBD.nombre == tipo).first()
     
     def get_planes_por_habitacion(self, id_tipoHabitacion: int):
-        return self.db.query(PlanesDB).filter(PlanesDB.id_tipoHabitacion == id_tipoHabitacion).all()
+        return self.db.query(PlanesBD).filter(PlanesBD.id_tipoHabitacion == id_tipoHabitacion).all()
