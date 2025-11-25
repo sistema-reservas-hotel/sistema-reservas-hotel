@@ -2,6 +2,7 @@ from app.api import Registrar_api
 from app.api import Inicio_api
 from app.api import Perfil_api
 from app.api import Reservas_api
+from app.api import Pagos_api
 
 
 ROUTERS = [
@@ -9,4 +10,5 @@ ROUTERS = [
    Inicio_api.router,
    Perfil_api.router,
    Reservas_api.router,
+   Pagos_api.router,
 ]
