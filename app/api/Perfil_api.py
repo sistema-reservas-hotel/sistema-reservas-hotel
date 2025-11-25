@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Header, status
 from sqlalchemy.orm import Session
 from app.models import SessionLocal
 from app.services.Perfil_service import PerfilService
-from app.domain.perfil_model import PerfilUpdateRequest
+from app.domain.Perfil_model import PerfilUpdateRequest
 
 router = APIRouter(
     prefix="/api/v1/cliente",
@@ -47,4 +47,4 @@ def actualizar_perfil(
     
     token = authorization.replace("Bearer ", "")
     service = PerfilService(db)
-    return service.actualizar_perfil(token, data)
+    return service.actualizar_perfil(token, data)
