@@ -1,3 +1,4 @@
 from .ClienteBD import ClienteDB
+from.ReservasBD import ReservasDB
 
-__all__ = ["ClienteDB"]
+__all__ = ["ClienteDB","ReservasDB"]
