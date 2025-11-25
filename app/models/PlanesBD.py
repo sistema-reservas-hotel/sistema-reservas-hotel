@@ -8,7 +8,7 @@ Base = declarative_base()
 
 
 class PlanesDB(Base):
-    tablename = "planes"
+    __tablename__ = "planes"
     id_Plan = Column(Integer, primary_key=True, index=True)
     id_tipoHabitacion = Column(Integer, ForeignKey("habitaciones.id_tipoHabitacion"),nullable=False)
     nombre = Column(String, nullable=False)  
