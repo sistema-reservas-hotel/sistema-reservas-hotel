@@ -6,7 +6,7 @@ from datetime import datetime
 Base = declarative_base()
 
 class ReservasDB(Base):
-    tablename = "reservas"
+    __tablename__ = "reservas"
     id_reserva = Column(Integer, primary_key=True)
     id_cliente = Column(Integer, ForeignKey("clientes.id_cliente"), nullable=False)
     fecha_reserva = Column(DateTime, nullable=False)
