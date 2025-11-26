@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from jose import jwt, JWTError
 from typing import Dict, Annotated
 from fastapi import HTTPException, status, Depends
-from fastapi.security import OAuth2Bearer
+from fastapi.security import OAuth2PasswordBearer
 import os
 from dotenv import load_dotenv
 
@@ -14,10 +14,10 @@ if not SECRET_KEY:
     
 ALGORITHM = "HS256"
 TOKEN_EXPIRE_MINUTES = 60
-oauth2_scheme = OAuth2Bearer(scheme_name="JWTAuth") 
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/inicio", scheme_name="JWTAuth") 
 
 
-def Create_access_token(data: Dict):
+def create_access_token(data: Dict):
     to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(minutes=TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire})
@@ -26,6 +26,7 @@ def Create_access_token(data: Dict):
 def get_current_user_payload(token: Annotated[str, Depends(oauth2_scheme)]):
 
     try:
+        print(f"\n[DEBUG VALIDADOR] Clave de verificación: '{SECRET_KEY}'")
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
 
         id_cliente = payload.get("id_cliente")
