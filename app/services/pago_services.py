@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.repository.Pago_repository import PagoDetalle
+from app.repository.Pago_repository import PagoRepository
 from app.domain.Pago_model import ResponsePagos, PagoDetalle
 from fastapi import HTTPException
 from typing import Optional
@@ -7,7 +7,7 @@ from datetime import datetime
 
 class PagoService:
     def __init__(self, db: Session):
-        self.repository = PagoDetalle(db)
+        self.repository = PagoRepository(db)
 
     def historial_pagos(self, id_cliente: int,
                         estado: Optional[str] = None,

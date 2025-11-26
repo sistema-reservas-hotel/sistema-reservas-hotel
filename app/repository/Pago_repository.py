@@ -1,17 +1,18 @@
-from pydantic import BaseModel
-from typing import List, Optional
-from datetime import datetime
+from sqlalchemy.orm import Session
+from app.models.PagosBD import PagosDB
 
-class PagoDetalle(BaseModel):
-    id_pago: int
-    fecha_pago: datetime
-    monto: int
-    metodo: str
-    estado: str
-    comprobante: Optional[str] = None
+class PagoRepository:
+    def __init__(self, db: Session):
+        self.db = db
 
-class ResponsePagos(BaseModel):
-    success: bool
-    mensaje: str
-    data: dict = {"pagos": []}
-    error_code: Optional[str] = None
+    def get_pagos_cliente(self, id_cliente: int, estado=None, desde=None, hasta=None):
+        query = self.db.query(PagosDB).filter(PagosDB.id_cliente == id_cliente)
+
+        if estado:
+            query = query.filter(PagosDB.estado == estado)
+        if desde:
+            query = query.filter(PagosDB.fecha_pago >= desde)
+        if hasta:
+            query = query.filter(PagosDB.fecha_pago <= hasta)
+
+        return query.all()

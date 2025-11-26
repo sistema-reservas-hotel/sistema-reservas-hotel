@@ -1,38 +1,34 @@
 from pydantic import BaseModel
-from typing import List, Optional
-
+from typing import List, Optional, Dict
 
 class PlanIncluido(BaseModel):
-    id_plan: int
-    nombre: str
-    precio: float
-    descripcion: Optional[str]
-
-    class Config:
-        from_attributes = True
-
+    plan: str
+    precio: int
+    serviciosIncluidos: List[str]
 
 class HabitacionBase(BaseModel):
-    id_tipoHabitacion: int
+    idTipoHabitacion: int
     nombre: str
     descripcion: str
     capacidad: int
-    precioPorNoche: float
+    precioPorNoche: int
     imagen: Optional[str]
     disponible: bool
-    HabitacionDisponibles: int
+    habitacionesDisponibles: int
+    planes: List[PlanIncluido] = []
 
-    class Config:
-        from_attributes = True
+class HabitacionesResponse(BaseModel):
+    success: bool
+    message: str
+    data: List[HabitacionBase] = []
 
-
-class HabitacionConPlanesResponse(BaseModel):
-    habitacion: HabitacionBase
-    planes: List[PlanIncluido]
-
+class HabitacionResponse(BaseModel):
+    success: bool
+    message: str
+    data: HabitacionBase
 
 class ErrorResponse(BaseModel):
-    succes: bool = False
+    success: bool = False
     message: str
     error_code: str
-    details: dict = {}
+    details: Dict = {}
