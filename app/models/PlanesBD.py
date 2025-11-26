@@ -2,11 +2,8 @@ from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey,
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
-from app.models.HabitacionesBD import HabitacionesDB
 from sqlalchemy.orm import relationship
-
-Base = declarative_base()
-
+from app.models.Base import Base
 
 class PlanesDB(Base):
     __tablename__ = "planes"
@@ -15,4 +12,5 @@ class PlanesDB(Base):
     nombre = Column(String, nullable=False)  
     precio = Column(Integer, nullable=False)
     serviciosIncluidos = Column(String, nullable=False)  
-    habitacion = relationship("HabitacionesDB", back_populates="planes")
+
+    habitacion = relationship("HabitacionesDB")

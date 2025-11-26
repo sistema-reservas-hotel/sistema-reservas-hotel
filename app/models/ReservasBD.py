@@ -2,13 +2,11 @@ from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey,
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
-from app.models.ClienteBD import ClienteDB
 from sqlalchemy.orm import relationship
-
-Base = declarative_base()
+from app.models.Base import Base
 
 class ReservasDB(Base):
-    tablename = "reservas"
+    __tablename__ = "reservas"
     id_reserva = Column(Integer, primary_key=True)
     id_cliente = Column(Integer, ForeignKey("clientes.id_cliente"), nullable=False)
     fecha_reserva = Column(DateTime, nullable=False)
@@ -18,5 +16,5 @@ class ReservasDB(Base):
     plan = Column(String, nullable=False)
     valor_total = Column(Integer, nullable=False)
     estado = Column(String, nullable=False)
-    cliente = relationship("ClienteDB", backref="reservas")
-    
+
+    cliente = relationship("ClienteDB", back_populates="reservas")
