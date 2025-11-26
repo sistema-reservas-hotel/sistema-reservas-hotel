@@ -25,7 +25,7 @@ class InicioService:
             return {
                 "mensaje":"Credenciales invalidas. verifique su correo o contraseña.",
                 "data":None,
-                "succcess":False
+                "succcess":False    
             }
         
         if not verify_password(credentials.password, cliente.password):
@@ -35,7 +35,10 @@ class InicioService:
                 "success": False
             }
         
-        token = create_access_token({"sub": cliente.email})
+        token = create_access_token({
+            "sub": cliente.email,
+            "id_cliente": cliente.id_cliente 
+            })
 
         cliente_data = ClienteToken(
             id_cliente=cliente.id_cliente,
