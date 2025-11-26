@@ -15,6 +15,4 @@ class PagosDB(Base):
     estado = Column(String, nullable=False, default="Pendiente")  # Pendiente, Completado, Cancelado
     comprobante = Column(String, nullable=True)  # URL o nombre de archivo del comprobante
 
-    # Relaciones
-    cliente = relationship("ClienteDB", back_populates="pagos")
-    reserva = relationship("ReservasDB", back_populates="pagos")
+

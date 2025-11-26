@@ -1,29 +1,30 @@
 from datetime import datetime, timedelta
-from jose import jwt
 from jose import jwt, JWTError
+from typing import Dict, Annotated
 from fastapi import HTTPException, status, Depends
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import OAuth2Bearer
+import os
+from dotenv import load_dotenv
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+load_dotenv() 
 
-SECRET_KEY = "CLAVE_SECRETA_SUPER_SEGURA"
+SECRET_KEY = os.getenv("SECRET_KEY")
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY no se encontró. Asegúrate de que el archivo .env esté configurado.")
+    
 ALGORITHM = "HS256"
 TOKEN_EXPIRE_MINUTES = 60
+oauth2_scheme = OAuth2Bearer(scheme_name="JWTAuth") 
 
 
-def create_access_token(id_cliente: int):
-    to_encode = {"id_cliente": id_cliente}
+def Create_access_token(data: Dict):
+    to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(minutes=TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
-def decode_token(token: str):
-    try:
-        return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-    except JWTError:
-        return None
-    
-def validate_token(token: str = Depends(oauth2_scheme)):
+def get_current_user_payload(token: Annotated[str, Depends(oauth2_scheme)]):
+
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
 
@@ -32,13 +33,14 @@ def validate_token(token: str = Depends(oauth2_scheme)):
         if id_cliente is None:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Token inválido: falta id_cliente                                                                                                                                                            "
+                detail="Token inválido: falta id_cliente.",
+                headers={"WWW-Authenticate": "Bearer"},
             )
-
-        return {"id_cliente": id_cliente}
+        return payload 
 
     except JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token inválido o expirado"
+            detail="Token inválido o expirado",
+            headers={"WWW-Authenticate": "Bearer"},
         )

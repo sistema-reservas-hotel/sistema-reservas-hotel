@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends, Header, status
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
+from app.utils.jwt_manager import get_current_user_payload 
 from app.database import SessionLocal
 from app.services.Perfil_service import PerfilService
 from app.domain.Perfil_model import PerfilUpdateRequest
@@ -16,35 +17,26 @@ def get_db():
     finally:
         db.close()
 
+
 @router.get("/perfil", status_code=status.HTTP_200_OK)
-def obtener_perfil(authorization: str = Header(None), db: Session = Depends(get_db)):
-    if not authorization:
-        return {
-            "mensaje": "Token invalido o sesion expirada.",
-            "data": None,
-            "success": False,
-            "error_code": "AUTH_401"
-        }
+def obtener_perfil(
+    current_user_payload: dict = Depends(get_current_user_payload), 
+    db: Session = Depends(get_db)
+):
     
-    token = authorization.replace("Bearer ", "")
+    id_cliente = current_user_payload.get("id_cliente")
     service = PerfilService(db)
-    return service.obtener_perfil(token)
+    return service.obtener_perfil(id_cliente)
+
+
 
 
 @router.put("/perfil", status_code=status.HTTP_200_OK)
 def actualizar_perfil(
     data: PerfilUpdateRequest,
-    authorization: str = Header(None),
+    current_user_payload: dict = Depends(get_current_user_payload),
     db: Session = Depends(get_db)
 ):
-    if not authorization:
-        return {
-            "mensaje": "Token inválido o sesión expirada.",
-            "data": None,
-            "success": False,
-            "error_code": "AUTH_401"
-        }
-    
-    token = authorization.replace("Bearer ", "")
+    id_cliente = current_user_payload.get("id_cliente")
     service = PerfilService(db)
-    return service.actualizar_perfil(token, data)
+    return service.actualizar_perfil(id_cliente, data)

@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from app.repository.Preferencias_repository import PreferenciasRepository
-from app.utils.jwt_manager import validate_token
 from app.domain.Preferencias_model import PreferenciasBase, PreferenciasResponse
 
 class PreferenciasService:
@@ -9,12 +8,9 @@ class PreferenciasService:
     def __init__(self):
         self.repository = PreferenciasRepository()
 
-    def get_preferencias(self, db: Session, token: str):
-        payload = validate_token(token)
-        id_cliente = payload.get("id")
+    def get_preferencias(self, db: Session, id_cliente: int):
 
         prefs = self.repository.get_by_cliente(db, id_cliente)
-
         if not prefs:
             return PreferenciasResponse(
                 mensaje="No existen preferencias registradas para este usuario.",
@@ -28,13 +24,11 @@ class PreferenciasService:
             success=True
         )
 
-    def update_preferencias(self, db: Session, token: str, preferencias: PreferenciasBase):
+    def update_preferencias(self, db: Session, id_cliente: int, preferencias: PreferenciasBase):
         try:
-            payload = validate_token(token)
-            id_cliente = payload.get("id")
+           
 
-            data = preferencias.dict(exclude_unset=True)
-
+            data = preferencias.model_dump(exclude_unset=True)
             prefs = self.repository.save_or_update(db, id_cliente, data)
 
             return {
@@ -51,7 +45,7 @@ class PreferenciasService:
 
         except Exception as e:
             raise HTTPException(
-                status_code=400,
+                status_code=status.HTTP_400_BAD_REQUEST,
                 detail={
                     "success": False,
                     "error_code": "PRF_400",

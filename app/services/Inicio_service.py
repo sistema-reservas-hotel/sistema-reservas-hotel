@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from app.repository.Inicio_repository import InicioRepository
 from app.utils.password import verify_password
-from app.utils.jwt_manager import create_access_token
+from app.utils.jwt_manager import Create_access_token
 from app.domain.Inicio_model import InicioRequest, InicioResponse, ClienteToken
 
 
@@ -35,7 +35,7 @@ class InicioService:
                 "success": False
             }
         
-        token = create_access_token({"sub": cliente.email, "id_cliente": cliente.id_cliente})
+        token = Create_access_token({"sub": cliente.email, "id_cliente": cliente.id_cliente})
 
         cliente_data = ClienteToken(
             id_cliente=cliente.id_cliente,
