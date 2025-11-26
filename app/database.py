@@ -5,6 +5,7 @@ from sqlalchemy.orm import relationship
 from app.models.ClienteBD import ClienteDB
 from app.models.HabitacionesBD import HabitacionesDB
 from app.models.PlanesBD import PlanesDB
+from app.models.ReservasBD import ReservasDB
 from datetime import datetime
 
 

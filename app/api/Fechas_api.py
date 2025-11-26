@@ -1,4 +1,3 @@
-# app/api/fechas_api.py
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
