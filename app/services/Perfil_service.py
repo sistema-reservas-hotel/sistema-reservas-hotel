@@ -11,12 +11,12 @@ class PerfilService:
 
     def obtener_perfil(self, token: str):
         payload = decode_token(token)
-        if payload in None:
+        if payload is None:
             raise HTTPException(
                  status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Token inválido o sesión expirada."
             )   
-        id_cliente = payload.get("sub")
+        id_cliente = payload.get("id_cliente")
         cliente = self.repository.get_cliente_by_id(id_cliente)
 
         if not cliente:
@@ -39,7 +39,7 @@ class PerfilService:
                 detail="Token inválido o sesión expirada."
             )
         
-        id_cliente = payload.get("sub")
+        id_cliente = payload.get("id_cliente")
         cliente = self.repository.get_cliente_by_id(id_cliente)
 
         if not cliente:

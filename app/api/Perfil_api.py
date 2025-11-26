@@ -16,7 +16,7 @@ def get_db():
     finally:
         db.close()
 
-@router.get("/perfi", status_code=status.HTTP_200_OK)
+@router.get("/perfil", status_code=status.HTTP_200_OK)
 def obtener_perfil(authorization: str = Header(None), db: Session = Depends(get_db)):
     if not authorization:
         return {

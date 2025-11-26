@@ -1,76 +1,46 @@
-from sqlalchemy.orm import Session 
-from app.domain.Habitacion_model import HabitacionesResponse, HabitacionResponse, PlanIncluido, ErrorResponse
+from fastapi import HTTPException, status
+from sqlalchemy.orm import Session
 from app.repository.Habitacion_repository import HabitacionesRepository
 
+
 class HabitacionesService:
-    def _init_(self, db: Session):
+    def __init__(self, db: Session):
         self.repository = HabitacionesRepository(db)
 
-    def listar_habitaciones(self, tipoHabitacion: str = None):
-        if tipoHabitacion:
-            habitacion = self.repository.get_habitacion_by_tipo(tipoHabitacion)
-            if not habitacion:
-                return ErrorResponse(
-                    message="El tipo de habitacion ingresado no existe en nuestro sistema.",
-                    error_code="RES_404",
-                    details={"tipohabitacion": tipoHabitacion}
-                )
-            
-            if not habitacion.disponible or habitacion.habitacionesDisponibles == 0:
-                return ErrorResponse(
-                    message="No hay disponibilidad para el tipo de habitacion seleccionada.",
-                    error_code="RES_2040",
-                    details={"tipoHabitacion": tipoHabitacion}
-                )
-            
-            planes = [
-                PlanIncluido(
-                    nombre=p.nombre,
-                    precio=p.precio,
-                    serviciosIncluidos=p.serviciosIncluidos.split(",")
-                ) for p in self.repository.get_planes_por_habitacion(habitacion.id_tipoHabitacion)
-            ] 
+    def listar_habitaciones(self, tipo: str | None = None):
 
-            return HabitacionResponse(
-                idTipoHabitacion=habitacion.idTipoHabitacion,
-                nombre=habitacion.nombre,
-                descripcion=habitacion.descripcion,
-                capacidad=habitacion.capacidad,
-                precioPorNoche=habitacion.precioPorNoche,
-                imagen=habitacion.imagen,
-                disponible=habitacion.disponible,
-                habitacionesDisponibles=habitacion.habitacionesDisponibles,
-                planes=planes,
-                success=True,
-                message="La habitación seleccionada cuenta con disponibilidad"
+        # Si el usuario envía un tipoHabitacion específico
+        if tipo:
+            hab = self.repository.get_habitacion_by_tipo(tipo)
+            if not hab:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail=f"No existe habitación con tipo '{tipo}'."
+                )
+            return hab
+
+        # Si NO envía tipoHabitacion → devolver todas
+        habitaciones = self.repository.get_all_habitaciones()
+        if not habitaciones:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="No hay habitaciones disponibles."
             )
-        
-        else:
-            habitacion = self.repository.get_all_habitaciones()
-            lista = []
-            for h in habitacion:
-                planes = [
-                    PlanIncluido(
-                    nombre=p.nombre,
-                    precio=p.precio,
-                    serviciosInlcuidos=p.serviciosIncluidos.split(",")
-                    ) for p in self.repository.get_planes_por_habitacion(h.id_tipoHabitacion)
-                ]
 
-                lista.append({
-                    "idTipoHabitacion": h.idTipoHabitacion,
-                    "nombre": h.nombre,
-                    "descripcion": h.descripcion,
-                    "capacidad": h.capacidad,
-                    "precioPorNoche": h.precioPorNoche,
-                    "imagen": h.imagen,
-                    "disponible": h.disponible,
-                    "habitacionesDisponibles": h.habitacionesDisponibles,
-                    "planes": planes
-                })
+        return habitaciones
 
-                return HabitacionesResponse(
-                    success=True,
-                    message="Disponibilidad general de habitaciones.",
-                    data=lista
-                )
+    def obtener_planes(self, tipo: str):
+        habitacion = self.repository.get_habitacion_by_tipo(tipo)
+
+        if not habitacion:
+            raise HTTPException(
+                status_code=404,
+                detail=f"No existe habitación con tipo '{tipo}'."
+            )
+
+        planes = self.repository.get_planes_por_habitacion(habitacion.id_tipoHabitacion)
+
+        return {
+            "habitacion": habitacion,
+            "planes": planes
+        }

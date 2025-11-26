@@ -7,7 +7,7 @@ from app.domain.Inicio_model import InicioRequest, InicioResponse, ClienteToken
 
 
 class InicioService:
-    def __init__(self, db: Session):
+    def _init_(self, db: Session):
         self.repository = InicioRepository(db)
 
     def inicio(self, credentials: InicioRequest):
@@ -25,7 +25,7 @@ class InicioService:
             return {
                 "mensaje":"Credenciales invalidas. verifique su correo o contraseña.",
                 "data":None,
-                "succcess":False
+                "succcess":False    
             }
         
         if not verify_password(credentials.password, cliente.password):
@@ -35,7 +35,9 @@ class InicioService:
                 "success": False
             }
         
-        token = create_access_token({"sub": cliente.email})
+        token = create_access_token({
+            "id_cliente": cliente.id_cliente 
+            })
 
         cliente_data = ClienteToken(
             id_cliente=cliente.id_cliente,
@@ -50,4 +52,4 @@ class InicioService:
                 "usuario": cliente_data
             },
             "success": True
-            }
+        }
