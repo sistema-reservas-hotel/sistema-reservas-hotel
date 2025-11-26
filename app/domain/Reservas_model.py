@@ -18,7 +18,6 @@ class ReservaItem(BaseModel):
             "from_attributes": True
         }
 
-
 class ReservasData(BaseModel):
     reservas: List[ReservaItem]
 
