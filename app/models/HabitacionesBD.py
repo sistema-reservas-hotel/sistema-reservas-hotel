@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey,
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
+from app.models.PlanesBD import PlanesDB
 from sqlalchemy.orm import relationship
 
 Base = declarative_base()
@@ -16,4 +17,4 @@ class HabitacionesDB(Base):
     imagen = Column(String, nullable=True)
     disponible = Column(Boolean, default=True)
     habitacionesDisponibles = Column(Integer, default=0)
-    planes = relationship("PlanesDB", back_populates="habitacion")
+    planes = relationship("PlanesDB", back_populates="habitaciones")

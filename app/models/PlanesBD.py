@@ -14,4 +14,5 @@ class PlanesDB(Base):
     nombre = Column(String, nullable=False)  
     precio = Column(Integer, nullable=False)
     serviciosIncluidos = Column(String, nullable=False)  
+    id_tipoHabitacion = Column(Integer, ForeignKey("habitaciones.id_tipoHabitacion"))
     habitacion = relationship("HabitacionesDB", back_populates="planes")

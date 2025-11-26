@@ -3,7 +3,7 @@ from app.domain.Habitacion_model import HabitacionesResponse, HabitacionResponse
 from app.repository.Habitacion_repository import HabitacionesRepository
 
 class HabitacionesService:
-    def _init_(self, db: Session):
+    def __init__(self, db: Session):
         self.repository = HabitacionesRepository(db)
 
     def listar_habitaciones(self, tipoHabitacion: str = None):

@@ -2,6 +2,8 @@ from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey,
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import relationship
+from app.models.HabitacionesBD import HabitacionesDB
+from app.models.PlanesBD import PlanesDB    
 from datetime import datetime
 
 
