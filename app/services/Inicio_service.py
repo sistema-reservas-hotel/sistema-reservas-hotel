@@ -36,7 +36,6 @@ class InicioService:
             }
         
         token = create_access_token({
-            "sub": cliente.email,
             "id_cliente": cliente.id_cliente 
             })
 

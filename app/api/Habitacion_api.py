@@ -6,7 +6,10 @@ from app.domain.Habitacion_model import HabitacionesResponse, HabitacionResponse
 
 
 
-router = APIRouter(prefix="/reservas/habitaciones", tags=["Habitaciones"])
+router = APIRouter(
+    prefix="/api/v1/reservas/habitaciones", 
+    tags=["Habitaciones"]
+)
 
 def get_db():
     db = SessionLocal()
