@@ -9,13 +9,10 @@ Base = declarative_base()
 
 class PreferenciasClienteDB(Base):
     __tablename__ = "preferencias_cliente"
-
     id_preferencia = Column(Integer, primary_key=True, index=True)
     id_cliente = Column(Integer, ForeignKey("clientes.id_cliente"), nullable=False, unique=True)
-
     documento = Column(String)
     tipo_habitacion_preferida = Column(String)
     metodo_pago_preferido = Column(String)
     hora_llegada = Column(String)
-
     cliente = relationship("ClienteDB", backref="preferencias")

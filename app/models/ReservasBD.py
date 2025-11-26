@@ -3,6 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from app.models.ClienteBD import ClienteDB
 from datetime import datetime
+from app.models.ClienteBD import ClienteDB
 from sqlalchemy.orm import relationship
 
 Base = declarative_base()
