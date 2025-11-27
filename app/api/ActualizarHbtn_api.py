@@ -13,10 +13,10 @@ def get_db():
     finally:
         db.close()
 
-@router.put("/{id}/estado", status_code=status.HTTP_200_OK)
-def update_estado(id: int, estado: ActualizarEstado, db: Session = Depends(get_db)):
+@router.put("/{id_tipoHabitacion}/estado", status_code=status.HTTP_200_OK)
+def update_estado(id_tipoHabitacion: int, estado: ActualizarEstado, db: Session = Depends(get_db)):
     """
     Actualiza el estado de una habitación
     """
     service = HabitacionService(db)
-    return service.cambiar_estado(id, estado)
+    return service.cambiar_estado(id_tipoHabitacion, estado)
