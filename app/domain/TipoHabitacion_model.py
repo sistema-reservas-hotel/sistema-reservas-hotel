@@ -4,18 +4,18 @@ from typing import Optional
 class TipoHabitacionCreate(BaseModel):
     nombre: str
     descripcion: str
+    plan_incluido: Optional[str] = "null"
     descripcion_plan: Optional[str] = "Esta habitación no cuenta con planes incluidos"
-    plan: Optional[str] = None
-    precio_base: float
+    precio_base: int
     capacidad: int
 
 class TipoHabitacionResponse(BaseModel):
-    id_tipo: int
+    id_tipoHabitacion: int
     nombre: str
     descripcion: str
+    plan_incluido: Optional[str] = None
     descripcion_plan: Optional[str] = None
-    plan: Optional[str] = None
-    precio_base: float
+    precio_base: int
     capacidad: int
 
     class Config:

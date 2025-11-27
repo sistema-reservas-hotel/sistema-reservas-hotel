@@ -9,7 +9,7 @@ class HabitacionesDB(Base):
     __tablename__ = "habitaciones"
     id_tipoHabitacion = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, nullable=False)
-    descripcion_habitacion = Column(String, nullable=False)
+    descripcion = Column(String, nullable=False)
     plan_incluido = Column(String, nullable=False)
     descripcion_plan =  Column(String, nullable=False)
     capacidad = Column(Integer, nullable=False)

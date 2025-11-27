@@ -15,18 +15,18 @@ class TipoHabitacionService:
         tipo = self.repository.create_tipo(tipo_data)
         return TipoHabitacionResponse.from_orm(tipo)
 
-    def update_tipo(self, id_tipo: int, tipo_data: TipoHabitacionCreate) -> TipoHabitacionResponse:
-        tipo = self.repository.get_by_id(id_tipo)
+    def update_tipo(self, id_tipoHabitacion: int, tipo_data: TipoHabitacionCreate) -> TipoHabitacionResponse:
+        tipo = self.repository.get_by_id(id_tipoHabitacion)
         if not tipo:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Tipo de habitación no encontrado")
-        updated_tipo = self.repository.update_tipo(id_tipo, tipo_data.dict())
+        updated_tipo = self.repository.update_tipo(id_tipoHabitacion, tipo_data.dict())
         return TipoHabitacionResponse.from_orm(updated_tipo)
 
-    def delete_tipo(self, id_tipo: int):
-        tipo = self.repository.get_by_id(id_tipo)
+    def delete_tipo(self, id_tipoHabitacion: int):
+        tipo = self.repository.get_by_id(id_tipoHabitacion)
         if not tipo:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Tipo de habitación no encontrado")
-        result = self.repository.delete_tipo(id_tipo)
+        result = self.repository.delete_tipo(id_tipoHabitacion)
         if not result:
             raise HTTPException(
                 status_code=status.HTTP_409_CONFLICT,
