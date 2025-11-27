@@ -9,6 +9,7 @@ from app.api import Fechas_api
 from app.api import TipoHabitacion_api
 from app.api import ActualizarHbtn_api
 from app.api import HabitacionPrecio_api
+from app.api import SeleccionPlanes_api
 
 
 ROUTERS = [
@@ -23,4 +24,5 @@ ROUTERS = [
    TipoHabitacion_api.router,
    ActualizarHbtn_api.router,
    HabitacionPrecio_api.router,
+   SeleccionPlanes_api.router,
 ]
