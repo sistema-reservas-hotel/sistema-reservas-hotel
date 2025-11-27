@@ -1,18 +1,22 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
-from app.utils.jwt_manager import get_current_user_payload 
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
 from app.database import SessionLocal
 from app.services.Perfil_service import PerfilService
 from app.domain.Perfil_model import PerfilUpdateRequest
+from app.utils.jwt_manager import decode_token
 
 router = APIRouter(
     prefix="/api/v1/cliente",
     tags=["Perfil"]
 )
 
+security = HTTPBearer()
+
 def get_db():
     db = SessionLocal()
-    try: 
+    try:
         yield db
     finally:
         db.close()
@@ -20,23 +24,26 @@ def get_db():
 
 @router.get("/perfil", status_code=status.HTTP_200_OK)
 def obtener_perfil(
-    current_user_payload: dict = Depends(get_current_user_payload), 
+    credentials: HTTPAuthorizationCredentials = Depends(security),
     db: Session = Depends(get_db)
 ):
-    
-    id_cliente = current_user_payload.get("id_cliente")
+    token = credentials.credentials
+    payload = decode_token(token)
+    id_cliente = int(payload.get("sub"))
+
     service = PerfilService(db)
     return service.obtener_perfil(id_cliente)
-
-
 
 
 @router.put("/perfil", status_code=status.HTTP_200_OK)
 def actualizar_perfil(
     data: PerfilUpdateRequest,
-    current_user_payload: dict = Depends(get_current_user_payload),
+    credentials: HTTPAuthorizationCredentials = Depends(security),
     db: Session = Depends(get_db)
 ):
-    id_cliente = current_user_payload.get("id_cliente")
+    token = credentials.credentials
+    payload = decode_token(token)
+    id_cliente = int(payload.get("sub"))
+
     service = PerfilService(db)
     return service.actualizar_perfil(id_cliente, data)

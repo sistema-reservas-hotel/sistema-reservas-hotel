@@ -2,11 +2,9 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
 from app.services.Preferencias_service import PreferenciasService
-from app.domain.Preferencias_model import PreferenciasBase
-from app.utils.jwt_manager import get_current_user_payload 
+from app.domain.Preferencias_model import PreferenciasBase, PreferenciasResponse
 
-router = APIRouter(prefix="/api/clientes", tags=["Preferencias"])
-
+router = APIRouter(prefix="/api/v1/cliente/preferencias", tags=["Preferencias Cliente"])
 
 def get_db():
     db = SessionLocal()
@@ -15,25 +13,12 @@ def get_db():
     finally:
         db.close()
 
-
-@router.get("/preferencias")
-def get_preferencias(
-    db: Session = Depends(get_db),
-    current_user_payload: dict = Depends(get_current_user_payload)
-):
-
-    id_cliente = current_user_payload.get("id_cliente")
+@router.get("/", response_model=PreferenciasResponse)
+def obtener_preferencias(id_cliente: int, db: Session = Depends(get_db)):
     service = PreferenciasService(db)
     return service.get_preferencias(id_cliente)
 
-
-@router.put("/preferencias")
-def update_preferencias(
-    preferencias: PreferenciasBase,
-    db: Session = Depends(get_db),
-    current_user_payload: dict = Depends(get_current_user_payload)
-):
-    
-    id_cliente = current_user_payload.get("id_cliente")
-    service = PreferenciasService(db) 
-    return service.update_preferencias(id_cliente, preferencias)
+@router.put("/", response_model=PreferenciasResponse)
+def guardar_preferencias(id_cliente: int, preferencias: PreferenciasBase, db: Session = Depends(get_db)):
+    service = PreferenciasService(db)
+    return service.save_preferencias(id_cliente, preferencias)
