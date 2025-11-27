@@ -16,6 +16,6 @@ class ReservasDB(Base):
     habitacion = Column(String, nullable=False)
     plan = Column(String, nullable=False)
     valor_total = Column(Integer, nullable=False)
-    estado = Column(String, nullable=False)
+    estado_reserva = Column(String, nullable=False)
 
     cliente = relationship("ClienteDB", back_populates="reservas")

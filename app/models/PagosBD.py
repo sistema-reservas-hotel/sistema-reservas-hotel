@@ -12,7 +12,7 @@ class PagosDB(Base):
     fecha_pago = Column(DateTime, default=datetime.utcnow, nullable=False)
     monto = Column(Float, nullable=False)
     metodo = Column(String, nullable=False)  # Ej: "Tarjeta", "Efectivo", "Transferencia"
-    estado = Column(String, nullable=False, default="Pendiente")  # Pendiente, Completado, Cancelado
+    estado_pago = Column(String, nullable=False, default="Pendiente")  # Pendiente, Completado, Cancelado
     comprobante = Column(String, nullable=True)  # URL o nombre de archivo del comprobante
 
 

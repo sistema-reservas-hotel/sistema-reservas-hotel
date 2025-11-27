@@ -9,11 +9,12 @@ class HabitacionesDB(Base):
     __tablename__ = "habitaciones"
     id_tipoHabitacion = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, nullable=False)
-    descripcion = Column(String, nullable=False)
+    descripcion_habitacion = Column(String, nullable=False)
+    plan_incluido = Column(String, nullable=False)
+    descripcion_plan =  Column(String, nullable=False)
     capacidad = Column(Integer, nullable=False)
-    precioPorNoche = Column(Integer, nullable=False)
-    imagen = Column(String, nullable=True)
-    disponible = Column(Boolean, default=True)
+    precio_base = Column(Integer, nullable=False)
+    estado_habitacion = Column(Boolean, default=True)
     habitacionesDisponibles = Column(Integer, default=0)
 
     planes = relationship("PlanesDB")
