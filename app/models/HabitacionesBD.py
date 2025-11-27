@@ -14,7 +14,7 @@ class HabitacionesDB(Base):
     descripcion_plan =  Column(String, nullable=False)
     capacidad = Column(Integer, nullable=False)
     precio_base = Column(Integer, nullable=False)
-    estado_habitacion = Column(Boolean, default=True)
+    estado_habitacion = Column(String, default=True)
     habitacionesDisponibles = Column(Integer, default=0)
 
     planes = relationship("PlanesDB")
