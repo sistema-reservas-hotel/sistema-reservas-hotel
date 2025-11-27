@@ -7,16 +7,18 @@ from app.api import Preferencias_api
 from app.api import Habitacion_api
 from app.api import Fechas_api
 from app.api import TipoHabitacion_api
+from app.api import ActualizarHbtn_api
 
 
 ROUTERS = [
    Registrar_api.router,
-   #Inicio_api.router,
-   #Perfil_api.router,
-   #Reservas_api.router,
-   #Pagos_api.router,
+   Inicio_api.router,
+   Perfil_api.router,
+   Reservas_api.router,
+   Pagos_api.router,
    Preferencias_api.router,
    Habitacion_api.router,
    Fechas_api.router,
    TipoHabitacion_api.router,
+   ActualizarHbtn_api.router,
 ]
