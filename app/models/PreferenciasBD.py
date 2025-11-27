@@ -4,8 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 from app.models.ClienteBD import ClienteDB
 from sqlalchemy.orm import relationship
-
-Base = declarative_base()
+from app.models.Base import Base
 
 class PreferenciasClienteDB(Base):
     __tablename__ = "preferencias_cliente"
@@ -15,4 +14,5 @@ class PreferenciasClienteDB(Base):
     tipo_habitacion_preferida = Column(String)
     metodo_pago_preferido = Column(String)
     hora_llegada = Column(String)
-    cliente = relationship("ClienteDB", backref="preferencias")
+
+    cliente = relationship("ClienteDB")

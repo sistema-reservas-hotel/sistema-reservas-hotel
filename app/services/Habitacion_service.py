@@ -1,6 +1,6 @@
-from sqlalchemy.orm import Session 
-from app.domain.Habitacion_model import HabitacionesResponse, HabitacionResponse, PlanIncluido, ErrorResponse
+from sqlalchemy.orm import Session
 from app.repository.Habitacion_repository import HabitacionesRepository
+from app.domain.Habitacion_model import HabitacionesResponse, HabitacionResponse, ErrorResponse, PlanIncluido, HabitacionBase
 
 class HabitacionesService:
     def __init__(self, db: Session):
@@ -9,29 +9,30 @@ class HabitacionesService:
     def listar_habitaciones(self, tipoHabitacion: str = None):
         if tipoHabitacion:
             habitacion = self.repository.get_habitacion_by_tipo(tipoHabitacion)
+            
             if not habitacion:
                 return ErrorResponse(
-                    message="El tipo de habitacion ingresado no existe en nuestro sistema.",
+                    message="El tipo de habitación ingresado no existe en nuestro sistema. Verifique el nombre y vuelva a intentarlo",
                     error_code="RES_404",
-                    details={"tipohabitacion": tipoHabitacion}
+                    details={"tipoHabitacion": tipoHabitacion}
                 )
             
             if not habitacion.disponible or habitacion.habitacionesDisponibles == 0:
                 return ErrorResponse(
-                    message="No hay disponibilidad para el tipo de habitacion seleccionada.",
-                    error_code="RES_2040",
+                    message="Lo sentimos. En este momento la habitación seleccionada no cuenta con disponibilidad",
+                    error_code="RES_204",
                     details={"tipoHabitacion": tipoHabitacion}
                 )
-            
+
             planes = [
                 PlanIncluido(
-                    nombre=p.nombre,
+                    plan=p.nombre,
                     precio=p.precio,
                     serviciosIncluidos=p.serviciosIncluidos.split(",")
-                ) for p in self.repository.get_planes_por_habitacion(habitacion.id_tipoHabitacion)
-            ] 
+                ) for p in self.repository.get_planes_por_habitacion(habitacion.idTipoHabitacion)
+            ]
 
-            return HabitacionResponse(
+            habitacion_data = HabitacionBase(
                 idTipoHabitacion=habitacion.idTipoHabitacion,
                 nombre=habitacion.nombre,
                 descripcion=habitacion.descripcion,
@@ -40,37 +41,14 @@ class HabitacionesService:
                 imagen=habitacion.imagen,
                 disponible=habitacion.disponible,
                 habitacionesDisponibles=habitacion.habitacionesDisponibles,
-                planes=planes,
-                success=True,
-                message="La habitación seleccionada cuenta con disponibilidad"
+                planes=planes
             )
-        
+
+            return HabitacionResponse(
+                success=True,
+                message="La habitación seleccionada cuenta con disponibilidad",
+                data=habitacion_data
+            )
+
         else:
-            habitacion = self.repository.get_all_habitaciones()
-            lista = []
-            for h in habitacion:
-                planes = [
-                    PlanIncluido(
-                    nombre=p.nombre,
-                    precio=p.precio,
-                    serviciosInlcuidos=p.serviciosIncluidos.split(",")
-                    ) for p in self.repository.get_planes_por_habitacion(h.id_tipoHabitacion)
-                ]
-
-                lista.append({
-                    "idTipoHabitacion": h.idTipoHabitacion,
-                    "nombre": h.nombre,
-                    "descripcion": h.descripcion,
-                    "capacidad": h.capacidad,
-                    "precioPorNoche": h.precioPorNoche,
-                    "imagen": h.imagen,
-                    "disponible": h.disponible,
-                    "habitacionesDisponibles": h.habitacionesDisponibles,
-                    "planes": planes
-                })
-
-                return HabitacionesResponse(
-                    success=True,
-                    message="Disponibilidad general de habitaciones.",
-                    data=lista
-                )
+            habitaciones = self.reposi

@@ -8,8 +8,7 @@ class PreferenciasBase(BaseModel):
     hora_llegada: Optional[str] = None
 
     class Config:
-        from_attributes = True
-
+        from_attributes = True  # <- Esto permite from_orm
 
 class PreferenciasResponse(BaseModel):
     mensaje: str

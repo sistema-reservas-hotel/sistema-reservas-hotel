@@ -1,21 +1,16 @@
-from pydantic import BaseModel, EmailStr
-from datetime import datetime
+from pydantic import BaseModel
+from typing import Optional
 
-class PerfilResponse(BaseModel):
-    id_cliente: int
-    nombre: str
-    apellido: str
-    email: EmailStr
-    telefono: str
-    direccion: str
-    fecha_registro: datetime
+class PerfilUpdateRequest(BaseModel):
+    nombre: Optional[str] = None
+    apellido: Optional[str] = None
+    telefono: Optional[str] = None
+    direccion: Optional[str] = None
 
     class Config:
         from_attributes = True
 
-
-class PerfilUpdateRequest(BaseModel):
-    nombre: str | None = None
-    apellido: str | None = None
-    telefono: str | None = None
-    direccion: str | None = None
+class PerfilResponse(BaseModel):
+    mensaje: str
+    data: Optional[PerfilUpdateRequest] = None
+    success: bool

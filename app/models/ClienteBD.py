@@ -2,8 +2,9 @@ from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey,
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
+from app.models.Base import Base
+from sqlalchemy.orm import relationship
 
-Base = declarative_base()
 
 class ClienteDB(Base):
     __tablename__ = "clientes"
@@ -15,3 +16,7 @@ class ClienteDB(Base):
     direccion = Column(String)
     fecha_registro = Column(DateTime, default=datetime.utcnow)
     password = Column(String, nullable=False)
+
+    reservas = relationship("ReservasDB", back_populates="cliente")
+
+
