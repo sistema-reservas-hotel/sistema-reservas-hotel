@@ -8,9 +8,7 @@ class TipoHabitacionService:
         self.repository = TipoHabitacionRepository(db)
 
     def cambiar_precio(self, id_tipoHabitacion: int, precio_data: TipoHabitacionPrecioUpdate):
-        if precio_data.nuevo_precio <= 0:
-            raise HTTPException(status_code=400, detail="El precio debe ser mayor que cero")
-        
+        # Ya no hace falta validar <= 0 porque Pydantic lo maneja
         resultado = self.repository.update_precio(id_tipoHabitacion, precio_data.nuevo_precio)
         if resultado is None:
             raise HTTPException(status_code=404, detail="Tipo de habitación no encontrado")
