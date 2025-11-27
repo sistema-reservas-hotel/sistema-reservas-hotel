@@ -13,4 +13,5 @@ class PlanesDB(Base):
     precio = Column(Integer, nullable=False)
     serviciosIncluidos = Column(String, nullable=False)  
 
-    habitacion = relationship("HabitacionesDB")
+    habitacion = relationship("HabitacionesDB", back_populates="planes")
+
