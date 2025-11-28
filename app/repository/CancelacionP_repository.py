@@ -19,38 +19,25 @@ class PagoRepository:
         pago = self.get_by_id(id_pago)
         
         if not pago:
-            return None # Pago no encontrado
+            return None 
         
-        # Validación de estado cancelable (la lógica más estricta va en el Servicio)
+        
         if pago.estado_pago == "Cancelado":
-             return None # Ya cancelado, el servicio lo manejará como 404 (no encontrado/ya procesado)
+             return None 
 
-        # Se asume que tu modelo PagosDB necesita columnas para la trazabilidad de la cancelación.
-        # Si no existen, deberías agregarlas (ej: fecha_cancelacion, motivo_cancelacion).
-        # Por ahora, usaré las siguientes (deberías añadirlas a PagosDB si no están):
-        # pago.fecha_cancelacion = datetime.now()
-        # pago.motivo_cancelacion = motivo 
         
-        # --- Asumiendo que se agregan estos campos al modelo PagosDB ---
-        
-        # Como no están en tu modelo PagosDB, simularemos su existencia en el diccionario de retorno:
-        # Si tienes estas columnas en tu modelo PagosDB, descomenta y úsalas:
-        # pago.fecha_cancelacion = datetime.now()
-        # pago.motivo_cancelacion = motivo
         
         pago.estado_pago = "Cancelado"
         self.db.commit()
         self.db.refresh(pago)
         
-        # --- Preparación de la salida para el Servicio ---
-        # Se agregan los campos de cancelación temporalmente para la respuesta JSON.
-        fecha_cancelacion_mock = datetime.now() # Mock de fecha de cancelación
-
+    
+        fecha_cancelacion_mock = datetime.now() 
         return {
             "id_pago": pago.id_pago,
             "id_reserva": pago.id_reserva,
             "monto": pago.monto,
             "estado_pago": pago.estado_pago,
-            "fechaCancelacion": fecha_cancelacion_mock, # Usando el mock
-            "motivo": motivo # Usando el motivo
+            "fechaCancelacion": fecha_cancelacion_mock, 
+            "motivo": motivo
         }
