@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.models.PlanesDB import PlanesDB
+from app.models.PlanesBD import PlanesDB
 
 class PlanesRepository:
     def __init__(self, db: Session):
