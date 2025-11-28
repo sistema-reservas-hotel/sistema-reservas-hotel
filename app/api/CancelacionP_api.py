@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
-from database import SessionLocal # Asumiendo que 'database.py' existe
+from app.database import SessionLocal # Asumiendo que 'database.py' existe
 from app.services.CancelacionP_services import PagoService
 from app.domain.CancelacionP_model import PagoCancelacionSalida
 
