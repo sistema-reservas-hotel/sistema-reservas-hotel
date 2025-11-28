@@ -9,8 +9,8 @@ class PagoCanceladoResponse(BaseModel):
     Modelo de datos para una respuesta exitosa de cancelación de pago,
     siguiendo la estructura JSON solicitada.
     """
-    idPago: int = Field(alias="id_pago") # Mapeo del campo interno al campo de salida
-    idReserva: Optional[int] = Field(alias="id_reserva")
+    id_Pago: int = Field(alias="id_pago") # Mapeo del campo interno al campo de salida
+    id_Reserva: Optional[int] = Field(alias="id_reserva")
     monto: float
     estado: str = Field(alias="estado_pago")
     fechaCancelacion: datetime

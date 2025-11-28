@@ -1,22 +1,22 @@
 from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey, DateTime, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from app.models.ClienteBD import ClienteDB
+
 from datetime import datetime
 from sqlalchemy.orm import relationship
 from app.models.Base import Base
 
+
 class ReservasDB(Base):
     __tablename__ = "reservas"
+
     id_reserva = Column(Integer, primary_key=True)
     id_cliente = Column(Integer, ForeignKey("clientes.id_cliente"), nullable=False)
-    id_tipoHabitacion = Column(Integer, ForeignKey("habitaciones.id_tipoHabitacion"), nullable=False)
-    fecha_reserva = Column(DateTime, nullable=False)
-    check_in = Column(Date, nullable=False)
-    check_out = Column(Date, nullable=False)
-    habitacion = Column(String, nullable=False)
+    id_tipoHabitacion = Column(Integer, ForeignKey("habitaciones.id_tipoHabitacion"), nullable=False)  
+    fecha_reserva = Column(DateTime, default=datetime.utcnow, nullable=False)
+    check_in = Column(DateTime, nullable=False)
+    check_out = Column(DateTime, nullable=False)
+    habitacion = Column(String, nullable=False)  # nombre interno o código
     plan = Column(String, nullable=False)
-    valor_total = Column(Integer, nullable=False)
-    estado_reserva = Column(String, nullable=False)
 
     cliente = relationship("ClienteDB", back_populates="reservas")
