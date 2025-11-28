@@ -11,6 +11,7 @@ from app.api import ActualizarHbtn_api
 from app.api import HabitacionPrecio_api
 from app.api import SeleccionPlanes_api
 from app.api import CancelacionP_api
+from app.api import NuevaReserva_api
 
 
 ROUTERS = [
@@ -27,4 +28,5 @@ ROUTERS = [
    HabitacionPrecio_api.router,
    SeleccionPlanes_api.router,
    CancelacionP_api.router,
+   NuevaReserva_api.router,
 ]
