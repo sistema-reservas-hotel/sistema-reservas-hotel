@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
-from app.config.db import get_db
+from app.database import get_db
 from app.services.ProcesoPago_services import PagosService
 from app.domain.ProcesoPago_model import PagoCreacion
 

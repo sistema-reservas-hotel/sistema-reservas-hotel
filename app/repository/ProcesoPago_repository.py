@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.models.PagosDB import PagosDB
+from app.models.PagosBD import PagosDB
 from app.domain.Pago_model import PagoCreacion
 from datetime import datetime
 
