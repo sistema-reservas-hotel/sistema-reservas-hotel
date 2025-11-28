@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.models.PagosBD import PagosDB
-from app.domain.Pago_model import PagoCreacion
+from app.domain.Pago_model import PagoDetalle
 from datetime import datetime
 
 class PagosRepository:
@@ -8,7 +8,7 @@ class PagosRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def crear_pago(self, data: PagoCreacion):
+    def crear_pago(self, data: PagoDetalle):
         nuevo_pago = PagosDB(
             id_cliente=data.id_cliente,
             id_reserva=data.id_reserva,
