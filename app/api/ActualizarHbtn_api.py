@@ -4,7 +4,7 @@ from app.services.ActualizarHbtn_services import HabitacionService
 from app.domain.ActualizarHbtn_model import ActualizarEstado
 from app.database import SessionLocal
 
-router = APIRouter(prefix="/habitaciones", tags=["Habitaciones"])
+router = APIRouter(prefix="/habitaciones/tipo", tags=["Habitaciones"])
 
 def get_db():
     db = SessionLocal()

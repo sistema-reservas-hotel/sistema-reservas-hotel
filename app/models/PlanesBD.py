@@ -14,4 +14,3 @@ class PlanesDB(Base):
     serviciosIncluidos = Column(String, nullable=False)  
 
     habitacion = relationship("HabitacionesDB", back_populates="planes")
-

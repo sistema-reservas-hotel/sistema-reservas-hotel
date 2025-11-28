@@ -5,9 +5,7 @@ from typing import List
 class PlanResponse(BaseModel):
     idPlan: int
     nombre: str
-    descripcion: str
     precio: int
-    moneda: str
     serviciosIncluidos: List[str]
 
 class PlanesResponse(BaseModel):
