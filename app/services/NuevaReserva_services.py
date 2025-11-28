@@ -1,72 +1,74 @@
-from fastapi import HTTPException, status
-from sqlalchemy.orm import Session
+from fastapi import HTTPException
 from app.repository.NuevaReserva_repository import ReservaRepository
-from app.domain.NuevaReserva_model import ReservaCreacion, ReservaCreacionSalida, ReservaDetalle
-from pydantic import ValidationError # Importar para manejar errores de validación de Pydantic
+from app.models.ReservasBD import ReservasDB
+from datetime import datetime
 
 class ReservaService:
-    def __init__(self, db: Session):
-        self.repository = ReservaRepository(db)
 
-    def crear_nueva_reserva(self, reserva_data: ReservaCreacion) -> ReservaCreacionSalida:
-        
-        # 1. Validación de Fechas (Manejada por Pydantic/Validator)
-        # Se asume que el router ya maneja la validación inicial de Pydantic.
-        # Capturaremos el error aquí para formatearlo como RES_400 si la validación falla
-        # (Aunque en FastAPI, el ValidationError es capturado por el framework automáticamente con status 422,
-        # lo haremos explícito si la validación se ejecuta después de la inicialización).
-        
-        # 2. Validación de Capacidad (Caso 4: Capacidad excedida)
-        capacidad_data = self.repository.get_capacidad_y_nombre_tipo(reserva_data.id_tipoHabitacion)
-        
-        if not capacidad_data:
-             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail={"mensaje": "Tipo de habitación no encontrado.", "success": False}
-            )
-            
-        capacidad_maxima, nombre_tipo = capacidad_data
-        
-        if reserva_data.num_personas > capacidad_maxima:
-            raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail={
-                    "mensaje": f"El número de personas ({reserva_data.num_personas}) excede la capacidad máxima ({capacidad_maxima}) de la habitación '{nombre_tipo}'.",
-                    "success": False, 
-                    "error_code": "RES_409"
-                }
-            )
+    def __init__(self, db):
+        self.db = db
+        self.repo = ReservaRepository(db)
 
-        # 3. Validación de Disponibilidad (Caso 3: Sin disponibilidad)
-        habitacion_disponible = self.repository.find_disponible_habitacion(
-            reserva_data.id_tipoHabitacion, 
-            reserva_data.fecha_entrada, 
-            reserva_data.fecha_salida
+    def crear_reserva(self, data):
+        # Validación fechas
+        if data.check_out <= data.check_in:
+            raise HTTPException(status_code=400, detail={
+                "mensaje": "La fecha de salida debe ser posterior a la fecha de entrada.",
+                "success": False,
+                "error_code": "RES_400"
+            })
+
+        # Verificar disponibilidad usando habitacionesDisponibles
+        habitacion_libre = self.repo.buscar_disponibilidad(data.id_tipoHabitacion)
+        if not habitacion_libre:
+            raise HTTPException(status_code=204, detail={
+                "mensaje": "No hay habitaciones disponibles para el tipo solicitado.",
+                "success": False,
+                "error_code": "RES_204"
+            })
+
+        # Validar capacidad
+        if data.num_personas > habitacion_libre.capacidad:
+            raise HTTPException(status_code=409, detail={
+                "mensaje": "El número de personas excede la capacidad de la habitación.",
+                "success": False,
+                "error_code": "RES_409"
+            })
+
+        # Crear reserva
+        nueva_reserva = ReservasDB(
+            id_cliente=data.id_cliente,
+            id_tipoHabitacion=data.id_tipoHabitacion,
+            fecha_reserva=datetime.now(),
+            check_in=data.check_in,
+            check_out=data.check_out,
+            habitacion=habitacion_libre.nombre,
+            nombre_habitacion=habitacion_libre.nombre,
+            plan=data.plan,
+            valor_total=habitacion_libre.precio_base,
+            estado_reserva="Confirmada"
         )
 
-        if not habitacion_disponible:
-            raise HTTPException(
-                status_code=status.HTTP_204_NO_CONTENT, 
-                detail={
-                    "mensaje": "No hay habitaciones disponibles para el rango de fechas solicitado.", 
-                    "success": False, 
-                    "error_code": "RES_204"
-                }
-            )
-            
-        # 4. Creación y Bloqueo Atómico (Caso 1: Creación exitosa)
-        try:
-            datos_reserva = self.repository.crear_reserva(reserva_data, habitacion_disponible, nombre_tipo)
-            
-            return ReservaCreacionSalida(
-                mensaje="Reserva creada exitosamente.",
-                data=ReservaDetalle(**datos_reserva),
-                success=True
-            )
-        except Exception as e:
-            # Fallo en la transacción de BD (RES_500)
-            print(f"Error al crear reserva: {e}")
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail={"mensaje": "Error interno al procesar la reserva.", "success": False, "error_code": "RES_500"}
-            )
+        reserva = self.repo.crear_reserva(nueva_reserva)
+
+        return {
+            "mensaje": "Reserva creada exitosamente.",
+            "success": True,
+            "data": {
+                "id_reserva": reserva.id_reserva,
+                "id_cliente": reserva.id_cliente,
+                "habitacion": reserva.habitacion,
+                "nombre_habitacion": reserva.nombre_habitacion,
+                "plan": reserva.plan,
+                "check_in": str(reserva.check_in),
+                "check_out": str(reserva.check_out),
+                "valor_total": reserva.valor_total,
+                "estado": reserva.estado_reserva
+            }
+        }
+
+    def obtener_reserva(self, id_reserva: int):
+        reserva = self.repo.obtener_reserva(id_reserva)
+        if not reserva:
+            raise HTTPException(status_code=404, detail={"mensaje": "Reserva no encontrada", "success": False})
+        return reserva

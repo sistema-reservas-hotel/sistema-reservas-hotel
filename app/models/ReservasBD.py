@@ -12,14 +12,11 @@ class ReservasDB(Base):
 
     id_reserva = Column(Integer, primary_key=True)
     id_cliente = Column(Integer, ForeignKey("clientes.id_cliente"), nullable=False)
-    id_tipoHabitacion = Column(Integer, ForeignKey("habitaciones.id_tipoHabitacion"), nullable=False)
-    fecha_reserva = Column(DateTime, nullable=False)
-    check_in = Column(Date, nullable=False)
-    check_out = Column(Date, nullable=False)
+    id_tipoHabitacion = Column(Integer, ForeignKey("habitaciones.id_tipoHabitacion"), nullable=False)  
+    fecha_reserva = Column(DateTime, default=datetime.utcnow, nullable=False)
+    check_in = Column(DateTime, nullable=False)
+    check_out = Column(DateTime, nullable=False)
     habitacion = Column(String, nullable=False)  # nombre interno o código
-    nombre_habitacion = Column(String, nullable=False)  # ← NUEVO CAMPO
     plan = Column(String, nullable=False)
-    valor_total = Column(Integer, nullable=False)
-    estado_reserva = Column(String, nullable=False)
 
     cliente = relationship("ClienteDB", back_populates="reservas")
