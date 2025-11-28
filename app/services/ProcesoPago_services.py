@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from datetime import datetime
 from app.repository.ProcesoPago_repository import PagosRepository
-from app.repository.ProcesoPago_repository import ReservaRepository
+from app.repository.Reservas_repository import ReservaRepository
 from app.services.ProcesoPago_services import FacturacionService
 from app.domain.ProcesoPago_model import PagoCreacion
 
@@ -46,9 +46,12 @@ class PagosService:
             self.reservas_repo.actualizar_estado(pago.id_reserva, "Confirmada")
 
             factura = self.facturacion_service.generar_factura(
-                id_pago=pago.id_pago,
-                total=pago.monto
+            id_pago=pago.id_pago,
+            id_reserva=pago.id_reserva,
+            id_cliente=pago.id_cliente,
+            monto_total=pago.monto
             )
+            
 
             return {
                 "success": True,
@@ -75,7 +78,7 @@ class PagosService:
         reserva = self.reservas_repo.obtener_reserva(pago.id_reserva)
 
         # Política de reembolso
-        horas = reserva.horas_antes_checkin()
+        horas = self.reservas_repo.horas_antes_checkin(reserva.id_reserva)
 
         if horas >= 48:
             monto = pago.monto  # 100%
