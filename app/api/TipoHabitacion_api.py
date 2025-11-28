@@ -4,7 +4,7 @@ from app.database import SessionLocal
 from app.services.TipoHabitacion_service import TipoHabitacionService
 from app.domain.TipoHabitacion_model import TipoHabitacionCreate, TipoHabitacionResponse
 
-router = APIRouter(prefix="/habitaciones/tipo", tags=["Tipos de Habitaciones"])
+router = APIRouter(prefix="/habitaciones/tipo", tags=["Habitaciones"])
 
 def get_db():
     db = SessionLocal()

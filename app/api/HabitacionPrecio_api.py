@@ -4,7 +4,7 @@ from app.database import SessionLocal
 from app.services.HabitacionPrecio_services import TipoHabitacionService
 from app.domain.HabitacionPrecio_model import TipoHabitacionPrecioUpdate
 
-router = APIRouter(prefix="/habitaciones/tipo", tags=["Tipos de Habitación"])
+router = APIRouter(prefix="/habitaciones/tipo", tags=["Habitaciones"])
 
 def get_db():
     db = SessionLocal()

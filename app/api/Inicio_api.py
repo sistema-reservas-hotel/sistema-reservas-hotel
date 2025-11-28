@@ -7,7 +7,7 @@ from app.services.Inicio_service import InicioService
 
 router = APIRouter(
     prefix="/api/v1/cliente",
-    tags=["Login"]
+    tags=["Inicio"]
 )
 
 def get_db():

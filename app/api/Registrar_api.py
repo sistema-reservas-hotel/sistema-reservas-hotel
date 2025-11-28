@@ -6,7 +6,7 @@ from app.domain.Registrar_model import ClienteCreate
 
 router = APIRouter(
     prefix= "/api/v1/cliente",
-    tags=["Cliente"]
+    tags=["Registro"]
 )
 
 def get_db():
