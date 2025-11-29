@@ -8,7 +8,7 @@ from app.models.Base import Base
 
 
 class ReservasDB(Base):
-    __tablename__ = "reservas"
+    _tablename_ = "reservas"
 
     id_reserva = Column(Integer, primary_key=True)
     id_cliente = Column(Integer, ForeignKey("clientes.id_cliente"), nullable=False)
