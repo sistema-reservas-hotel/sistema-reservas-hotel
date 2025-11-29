@@ -30,3 +30,26 @@ class ReservaRepository:
         query = query.order_by(ReservasDB.fecha_reserva.desc())
 
         return query.all()
+    
+    def obtener_reserva(self, id_reserva: int) -> Optional[ReservasDB]:
+        """Obtiene una reserva por su ID"""
+        return self.db.query(ReservasDB).filter(ReservasDB.id_reserva == id_reserva).first()
+
+    def actualizar_estado(self, id_reserva: int, nuevo_estado: str) -> Optional[ReservasDB]:
+        """Actualiza el estado de una reserva"""
+        reserva = self.obtener_reserva(id_reserva)
+        if not reserva:
+            return None
+        reserva.estado = nuevo_estado
+        self.db.commit()
+        self.db.refresh(reserva)
+        return reserva
+
+    def horas_antes_checkin(self, id_reserva: int) -> Optional[int]:
+        """Devuelve cuántas horas faltan para el check-in de la reserva"""
+        reserva = self.obtener_reserva(id_reserva)
+        if not reserva:
+            return None
+        ahora = datetime.utcnow()
+        diferencia = reserva.check_in - ahora
+        return int(diferencia.total_seconds() // 3600)
