@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.services.SeleccionPlanes_service import PlanesService
 from app.database import SessionLocal
+from app.domain.SeleccionPlanes_models import PlanCreate, PlanUpdate
 
 router = APIRouter(prefix="/reservas", tags=["Planes"])
 
@@ -18,18 +19,28 @@ def listar_planes(db: Session = Depends(get_db)):
     return service.obtener_planes()
 
 @router.post("/planes")
-def agregar_plan(id_tipoHabitacion: int, nombre: str, precio: int, servicios: str, db: Session = Depends(get_db)):
+def agregar_plan(data: PlanCreate, db: Session = Depends(get_db)):
     service = PlanesService(db)
     try:
-        plan = service.agregar_plan(id_tipoHabitacion, nombre, precio, servicios)
+        plan = service.agregar_plan(
+            data.id_tipoHabitacion,
+            data.nombre,
+            data.precio,
+            data.serviciosIncluidos
+        )
         return {"success": True, "mensaje": "Plan agregado correctamente", "data": plan}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.put("/planes/{id_plan}")
-def editar_plan(id_plan: int, nombre: str, precio: int, servicios: str, db: Session = Depends(get_db)):
+def editar_plan(id_plan: int, data: PlanUpdate, db: Session = Depends(get_db)):
     service = PlanesService(db)
-    plan = service.editar_plan(id_plan, nombre, precio, servicios)
+    plan = service.editar_plan(
+        id_plan,
+        data.nombre,
+        data.precio,
+        data.serviciosIncluidos
+    )
     if not plan:
         raise HTTPException(status_code=404, detail="Plan no encontrado")
     return {"success": True, "mensaje": "Plan actualizado correctamente", "data": plan}
