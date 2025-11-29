@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from datetime import datetime
 from app.repository.ProcesoPago_repository import PagosRepository
 from app.repository.Reservas_repository import ReservaRepository
-from app.services.ProcesoPago_services import FacturacionService
+from app.services.Facturacion_services import FacturacionService
 from app.domain.ProcesoPago_model import PagoCreacion
 
 class PagosService:
