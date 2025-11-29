@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.services.Reserva_service import ReservaService
+from app.services.NuevaReserva_services import ReservaService
 from app.domain.NuevaReserva_model import ReservaRequest
 
 router = APIRouter(prefix="/api/v1/reservas", tags=["Reservas"])

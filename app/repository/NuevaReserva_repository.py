@@ -11,7 +11,7 @@ class ReservaRepository:
         # Busca la primera habitación disponible de ese tipo
         return self.db.query(HabitacionesDB).filter(
             HabitacionesDB.id_tipoHabitacion == id_tipoHabitacion,
-            HabitacionesDB.estado == "Disponible"
+            HabitacionesDB.estado_habitacion == "Disponible"
         ).first()
 
     def crear_reserva(self, reserva: ReservasDB):

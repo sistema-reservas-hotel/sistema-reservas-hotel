@@ -7,4 +7,5 @@ class ReservaRequest(BaseModel):
     capacidad: int
     check_in: datetime
     check_out: datetime
-    plan: str
+    plan_incluido: str
+

@@ -8,8 +8,7 @@ from app.models.Base import Base
 
 
 class ReservasDB(Base):
-    _tablename_ = "reservas"
-
+    __tablename__ = "reservas"
     id_reserva = Column(Integer, primary_key=True)
     id_cliente = Column(Integer, ForeignKey("clientes.id_cliente"), nullable=False)
     id_tipoHabitacion = Column(Integer, ForeignKey("habitaciones.id_tipoHabitacion"), nullable=False)  
@@ -19,6 +18,6 @@ class ReservasDB(Base):
     habitacion = Column(String, nullable=False)  # nombre interno o código
     plan = Column(String, nullable=False)
     estado_reserva = Column(String, nullable=False)
-    num_personas = Column(Integer, nullable=False)
+   
 
     cliente = relationship("ClienteDB", back_populates="reservas")

@@ -27,7 +27,7 @@ class ReservaService:
             })
 
         # Validar capacidad
-        if data.num_personas > habitacion_libre.capacidad:
+        if data.capacidad > habitacion_libre.capacidad:
             raise HTTPException(status_code=409, detail={
                 "mensaje": "El número de personas excede la capacidad de la habitación.",
                 "success": False
@@ -40,9 +40,8 @@ class ReservaService:
             fecha_reserva=datetime.now(),
             check_in=data.check_in,
             check_out=data.check_out,
-            habitacion=habitacion_libre.nombre,
-            nombre_habitacion=habitacion_libre.nombre,
-            plan=data.plan,
+            nombre=habitacion_libre.nombre,
+            plan_incluido=data.plan_incluido,
             valor_total=habitacion_libre.precio_base,
             estado_reserva="Confirmada"
         )
@@ -56,8 +55,8 @@ class ReservaService:
                 "id_reserva": reserva.id_reserva,
                 "id_cliente": reserva.id_cliente,
                 "habitacion": reserva.habitacion,
-                "nombre_habitacion": reserva.nombre_habitacion,
-                "plan": reserva.plan,
+                "nombre": reserva.nombre,
+                "plan_incluido": reserva.plan_incluido,
                 "check_in": str(reserva.check_in),
                 "check_out": str(reserva.check_out),
                 "valor_total": reserva.valor_total,
