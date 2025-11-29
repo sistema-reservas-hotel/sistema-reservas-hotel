@@ -1,20 +1,24 @@
-# app/domain/Plan_model.py
 from pydantic import BaseModel
-from typing import List
 
-class PlanResponse(BaseModel):
-    idPlan: int
+class PlanCreate(BaseModel):
+    id_tipoHabitacion: int
     nombre: str
     precio: int
-    serviciosIncluidos: List[str]
+    serviciosIncluidos: str
 
-class PlanesResponse(BaseModel):
-    success: bool
-    message: str
-    data: List[PlanResponse] = []
 
-class ErrorResponse(BaseModel):
-    success: bool
-    error_code: str
-    message: str
-    details: dict = {}
+class PlanUpdate(BaseModel):
+    nombre: str
+    precio: int
+    serviciosIncluidos: str
+
+
+class PlanResponse(BaseModel):
+    id_Plan: int
+    id_tipoHabitacion: int
+    nombre: str
+    precio: int
+    serviciosIncluidos: str
+
+    class Config:
+        orm_mode = True

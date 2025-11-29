@@ -10,29 +10,27 @@ class ReservaService:
         self.repo = ReservaRepository(db)
 
     def crear_reserva(self, data):
-        # Validación fechas
+
+        # Validación de fechas
         if data.check_out <= data.check_in:
             raise HTTPException(status_code=400, detail={
                 "mensaje": "La fecha de salida debe ser posterior a la fecha de entrada.",
-                "success": False,
-                "error_code": "RES_400"
+                "success": False
             })
 
-        # Verificar disponibilidad usando habitacionesDisponibles
+        # Buscar habitación disponible
         habitacion_libre = self.repo.buscar_disponibilidad(data.id_tipoHabitacion)
         if not habitacion_libre:
             raise HTTPException(status_code=204, detail={
                 "mensaje": "No hay habitaciones disponibles para el tipo solicitado.",
-                "success": False,
-                "error_code": "RES_204"
+                "success": False
             })
 
         # Validar capacidad
         if data.num_personas > habitacion_libre.capacidad:
             raise HTTPException(status_code=409, detail={
                 "mensaje": "El número de personas excede la capacidad de la habitación.",
-                "success": False,
-                "error_code": "RES_409"
+                "success": False
             })
 
         # Crear reserva
@@ -70,5 +68,8 @@ class ReservaService:
     def obtener_reserva(self, id_reserva: int):
         reserva = self.repo.obtener_reserva(id_reserva)
         if not reserva:
-            raise HTTPException(status_code=404, detail={"mensaje": "Reserva no encontrada", "success": False})
+            raise HTTPException(status_code=404, detail={
+                "mensaje": "Reserva no encontrada",
+                "success": False
+            })
         return reserva

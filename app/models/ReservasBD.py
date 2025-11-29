@@ -18,5 +18,7 @@ class ReservasDB(Base):
     check_out = Column(DateTime, nullable=False)
     habitacion = Column(String, nullable=False)  # nombre interno o código
     plan = Column(String, nullable=False)
+    estado_reserva = Column(String, nullable=False)
+    num_personas = Column(Integer, nullable=False)
 
     cliente = relationship("ClienteDB", back_populates="reservas")
